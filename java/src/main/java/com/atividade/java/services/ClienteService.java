@@ -2,13 +2,17 @@ package com.atividade.java.services;
 
 import com.atividade.java.models.ClienteModel;
 import com.atividade.java.repositories.ClienteRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
-public class ClienteService {
+public class ClienteService implements UserDetailsService {
 
     private final ClienteRepository repository;
 
@@ -24,11 +28,11 @@ public class ClienteService {
         return repository.findAll();
     }
 
-    public Optional<ClienteModel> findById(Long id) {
+    public Optional<ClienteModel> findById(UUID id) {
         return repository.findById(id);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         repository.deleteById(id);
     }
 
@@ -36,4 +40,8 @@ public class ClienteService {
         return repository.findByEmail(email);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return repository.findByLogin(username);
+    }
 }
