@@ -32,4 +32,8 @@ public class ClienteService {
         repository.deleteById(id);
     }
 
+    public ClienteModel findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
 }

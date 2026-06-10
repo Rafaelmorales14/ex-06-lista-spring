@@ -51,4 +51,10 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/buscar/{email}")
+    public ResponseEntity<ClienteModel> findByEmail(@PathVariable String email) {
+        ClienteModel cliente = service.findByEmail(email);
+
+        return ResponseEntity.ok().body(cliente);
+    }
 }
